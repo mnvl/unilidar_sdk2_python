@@ -10,6 +10,7 @@ You can use the code interfaces in this repository to obtain point cloud and IMU
 
 We provide several common interfaces for the LiDAR:
 - The original C++ based SDK: [unitree_lidar_sdk](./unitree_lidar_sdk/README.md)
+- Python bindings installable with pip: [unitree_lidar_sdk](./unitree_lidar_sdk/README.md)
 - The package for parsing and publishing LiDAR data in the ROS environment: [unitree_lidar_ros](./unitree_lidar_ros/src/unitree_lidar_ros/README.md)
 - The package for parsing and publishing LiDAR data in the ROS2 environment: [unitree_lidar_ros2](./unitree_lidar_ros2/src/unitree_lidar_ros2/README.md)
 
@@ -189,6 +190,36 @@ A Cloud msg is parsed!
 	  (-0.442076, 0.169157, 0.039747, 0.000000, 0.000062, 1)
 	  (-0.446358, 0.170658, 0.045172, 0.000000, 0.000069, 1)
 	  ...
+```
+
+
+### 3.5 Python Bindings (pip)
+
+Python bindings are provided in `unitree_lidar_sdk` and can be installed with pip.
+
+Install from this repository:
+
+```bash
+cd unitree_lidar_sdk
+pip install .
+```
+
+Quick import check:
+
+```bash
+python -c "from unitree_lidar_sdk import LidarReader; print(LidarReader)"
+```
+
+Hardware integration test (prints cloud/IMU/version packets):
+
+```bash
+python -m unittest -v tests/test_device_stream.py
+```
+
+Use UDP mode for the test if needed:
+
+```bash
+UNITREE_LIDAR_TEST_MODE=udp python -m unittest -v tests/test_device_stream.py
 ```
 
 

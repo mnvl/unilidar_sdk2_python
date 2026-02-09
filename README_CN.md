@@ -8,6 +8,7 @@
 
 我们为激光雷达提供了几种常用的接口：
 - 原始的基于C++的SDK：[unitree_lidar_sdk](./unitree_lidar_sdk/README.md)
+- 可通过pip安装的Python绑定：[unitree_lidar_sdk](./unitree_lidar_sdk/README.md)
 - 用于在ROS环境下解析和发布激光雷达数据的软件包：[unitree_lidar_ros](./unitree_lidar_ros/src/unitree_lidar_ros/README.md)
 - 用于在ROS2环境下解析和发布激光雷达数据的软件包：[unitree_lidar_ros2](./unitree_lidar_ros2/src/unitree_lidar_ros2/README.md)
 
@@ -188,6 +189,35 @@ A Cloud msg is parsed!
 	  (-0.442076, 0.169157, 0.039747, 0.000000, 0.000062, 1)
 	  (-0.446358, 0.170658, 0.045172, 0.000000, 0.000069, 1)
 	  ...
+```
+
+### 3.5 Python绑定（pip）
+
+`unitree_lidar_sdk`目录提供了Python绑定，可通过pip安装。
+
+在本仓库中安装：
+
+```bash
+cd unitree_lidar_sdk
+pip install .
+```
+
+快速导入检查：
+
+```bash
+python -c "from unitree_lidar_sdk import LidarReader; print(LidarReader)"
+```
+
+硬件联调测试（会打印点云/IMU/版本信息）：
+
+```bash
+python -m unittest -v tests/test_device_stream.py
+```
+
+如需使用UDP模式测试：
+
+```bash
+UNITREE_LIDAR_TEST_MODE=udp python -m unittest -v tests/test_device_stream.py
 ```
 
 ## 4. 如何使用ROS软件包
