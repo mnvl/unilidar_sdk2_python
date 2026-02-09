@@ -195,6 +195,12 @@ A Cloud msg is parsed!
 
 `unitree_lidar_sdk`目录提供了Python绑定，可通过pip安装。
 
+直接从GitHub安装：
+
+```bash
+pip install git+https://github.com/mnvl/unilidar_sdk2_python.git
+```
+
 在本仓库中安装：
 
 ```bash

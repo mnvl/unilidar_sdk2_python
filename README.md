@@ -197,6 +197,12 @@ A Cloud msg is parsed!
 
 Python bindings are provided in `unitree_lidar_sdk` and can be installed with pip.
 
+Install directly from GitHub:
+
+```bash
+pip install git+https://github.com/mnvl/unilidar_sdk2_python.git
+```
+
 Install from this repository:
 
 ```bash

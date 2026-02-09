@@ -5,6 +5,7 @@ from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
 ROOT = Path(__file__).resolve().parent
+SDK_ROOT = ROOT / "unitree_lidar_sdk"
 
 
 def _normalize_arch(machine: str) -> str:
@@ -19,15 +20,15 @@ def _normalize_arch(machine: str) -> str:
 
 
 arch = _normalize_arch(platform.machine())
-static_lib = ROOT / "lib" / arch / "libunilidar_sdk2.a"
+static_lib = SDK_ROOT / "lib" / arch / "libunilidar_sdk2.a"
 if not static_lib.exists():
     raise RuntimeError(f"Missing SDK static library: {static_lib}")
 
 ext_modules = [
     Pybind11Extension(
         "unitree_lidar_sdk._native",
-        ["src/bindings.cpp"],
-        include_dirs=[str(ROOT / "include")],
+        [str(SDK_ROOT / "src" / "bindings.cpp")],
+        include_dirs=[str(SDK_ROOT / "include")],
         extra_objects=[str(static_lib)],
         cxx_std=17,
         extra_compile_args=["-O3", "-fvisibility=hidden", "-pthread"],

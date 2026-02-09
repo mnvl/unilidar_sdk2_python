@@ -4,6 +4,14 @@ Python bindings for Unitree Lidar SDK2 with prebuilt native SDK static libraries
 
 ## Install
 
+From GitHub:
+
+```bash
+pip install git+https://github.com/mnvl/unilidar_sdk2_python.git
+```
+
+From local repository clone:
+
 ```bash
 pip install .
 ```
