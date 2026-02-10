@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <string>
 
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -52,16 +53,18 @@ py::dict to_py_cloud(const PointCloudUnitree &cloud)
     out["id"] = cloud.id;
     out["ring_num"] = cloud.ringNum;
 
-    py::list points;
-    for (const auto &p : cloud.points) {
-        py::dict point;
-        point["x"] = p.x;
-        point["y"] = p.y;
-        point["z"] = p.z;
-        point["intensity"] = p.intensity;
-        point["time"] = p.time;
-        point["ring"] = p.ring;
-        points.append(point);
+    // points columns: x, y, z, intensity, time, ring
+    py::array_t<float> points(
+        {static_cast<py::ssize_t>(cloud.points.size()), static_cast<py::ssize_t>(6)});
+    auto points_view = points.mutable_unchecked<2>();
+    for (py::ssize_t i = 0; i < points_view.shape(0); ++i) {
+        const auto &p = cloud.points[static_cast<size_t>(i)];
+        points_view(i, 0) = p.x;
+        points_view(i, 1) = p.y;
+        points_view(i, 2) = p.z;
+        points_view(i, 3) = static_cast<float>(p.intensity);
+        points_view(i, 4) = p.time;
+        points_view(i, 5) = static_cast<float>(p.ring);
     }
     out["points"] = points;
     return out;

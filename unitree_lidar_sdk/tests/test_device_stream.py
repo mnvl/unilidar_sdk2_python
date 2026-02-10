@@ -2,6 +2,8 @@ import os
 import time
 import unittest
 
+import numpy as np
+
 from unitree_lidar_sdk import (
     LIDAR_2D_POINT_DATA_PACKET_TYPE,
     LIDAR_IMU_DATA_PACKET_TYPE,
@@ -96,7 +98,10 @@ class TestUnitreeLidarDeviceStream(unittest.TestCase):
                     found["cloud"] += 1
                     if printed < MAX_PRINT_PACKETS:
                         points = cloud["points"]
-                        first = points[0] if points else None
+                        self.assertIsInstance(points, np.ndarray)
+                        self.assertEqual(points.ndim, 2)
+                        self.assertEqual(points.shape[1], 6)
+                        first = points[0].tolist() if len(points) > 0 else None
                         print(
                             "[cloud3d] "
                             f"stamp={cloud['stamp']:.6f} id={cloud['id']} "

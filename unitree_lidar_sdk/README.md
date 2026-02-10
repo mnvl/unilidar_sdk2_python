@@ -34,7 +34,9 @@ while True:
     if packet_type == LIDAR_POINT_DATA_PACKET_TYPE:
         cloud = reader.get_point_cloud()
         if cloud:
-            print(cloud["stamp"], len(cloud["points"]))
+            points = cloud["points"]  # numpy.ndarray, shape (N, 6)
+            # columns: x, y, z, intensity, time, ring
+            print(cloud["stamp"], points.shape, points.dtype)
     elif packet_type == LIDAR_IMU_DATA_PACKET_TYPE:
         imu = reader.get_imu_data()
         if imu:
